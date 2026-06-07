@@ -1,9 +1,10 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 import locators.base_page_locators as BPL
+import urls
 
 
-class BasePageScooter:
+class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
@@ -37,7 +38,7 @@ class BasePageScooter:
         self.driver.find_element(*BPL.LOGO_YANDEX).click()
 
     def check_scooter_logo_button_where_transition(self):
-        assert "https://qa-scooter.education-services.ru/" == self.driver.current_url
+        assert urls.MAIN_PAGE_SCOOTER_SERVICES == self.driver.current_url
 
     def wait_for_load_yandex_page(self):
         wait = WebDriverWait(self.driver, 5)
@@ -48,4 +49,4 @@ class BasePageScooter:
         wait.until(expected_conditions.title_is("Яндекс — быстрый поиск в интернете"))
         
     def check_yandex_logo_button_where_transition(self):
-        assert "https://ya.ru/" in self.driver.current_url
+        assert urls.MAIN_PAGE_YANDEX_SHORT in self.driver.current_url

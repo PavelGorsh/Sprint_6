@@ -1,8 +1,8 @@
 from selenium import webdriver
-from pages.base_page import BasePageScooter
-from pages.order_page import OrderPageScooter
+from pages.base_page import BasePage
+from pages.order_page import OrderPage
 import locators.order_page_locators as OPL
-from urls import UrlsScooter
+import urls
 from data_for_tests.data_lists_for_tests import DataListsForTests as Data
 import pytest
 
@@ -15,10 +15,10 @@ class TestOrderPage:
         # Создадим драйвер для браузера Firefox
         cls.driver = webdriver.Firefox()
         # Перейдём на страницу ЯндексСамокат
-        cls.driver.get(UrlsScooter().MAIN_PAGE)
+        cls.driver.get(urls.MAIN_PAGE_SCOOTER_SERVICES)
         # Создадим объект класса страницы ЯндексСамокат
-        cls.base_page = BasePageScooter(cls.driver)
-        cls.order_page = OrderPageScooter(cls.driver)
+        cls.base_page = BasePage(cls.driver)
+        cls.order_page = OrderPage(cls.driver)
 
     @pytest.mark.parametrize('button, name, surname, address, metro, phone, date, period, color, comment', data)
     def test_order(self, button, name, surname, address, metro, phone, date, period, color, comment):
@@ -26,20 +26,22 @@ class TestOrderPage:
         self.base_page.wait_for_load_base_page()
         # Нажать кнопку «Заказать»
         self.base_page.click_order_button(button)
-        # Добавь явное ожидание для загрузки страницы заказа
+        # Добавь явное ожидание для загрузки страницы заказа «Для кого самокат»
         self.order_page.wait_for_load(OPL.NAME)
-        # Заполнить поля заказа «Для кого самокат»
+        # Заполнить поля страницы заказа «Для кого самокат»
         self.order_page.fill_order_for(name, surname, address, metro, phone)
         # Нажать кнопку «Далее»
         self.order_page.click_order_next()
-        # Заполнить поля заказа «Про аренду»
+        # Добавь явное ожидание для загрузки страницы заказа «Про аренду»
+        self.order_page.wait_for_load(OPL.DATE)
+        # Заполнить поля страницы заказа «Про аренду»
         self.order_page.fill_order_about(date, period, color, comment)
         # Нажать кнопку «Заказать»
         self.order_page.click_order_button()
         # Добавить явное ожидание для загрузки страницы подтверждения заказа
         self.order_page.wait_for_load(OPL.ORDER_CONFIRM)
         # Нажать кнопку «Да»
-        self.order_page.click_order_window_button()
+        self.order_page.click_order_confirm_button()
         # Добавить явное ожидание для загрузки страницы сообщения об успешном создании заказа
         self.order_page.wait_for_load(OPL.ORDER_SUCCESS)
         # Проверка создания заказа

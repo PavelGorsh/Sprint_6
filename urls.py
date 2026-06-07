@@ -1,4 +1,2 @@
-from selenium.webdriver.common.by import By
-
-class UrlsScooter:
-    MAIN_PAGE = "https://qa-scooter.education-services.ru/"
+MAIN_PAGE_SCOOTER_SERVICES = "https://qa-scooter.education-services.ru/"
+MAIN_PAGE_YANDEX_SHORT = "https://ya.ru/"

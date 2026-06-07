@@ -1,6 +1,6 @@
 from selenium import webdriver
-from pages.base_page import BasePageScooter
-from urls import UrlsScooter
+from pages.base_page import BasePage
+import urls
 from data_for_tests.data_lists_for_tests import DataListsForTests as Data
 import locators.base_page_locators as BPL
 import pytest
@@ -13,9 +13,9 @@ class TestBasePage:
         # Создадим драйвер для браузера Firefox
         cls.driver = webdriver.Firefox()
         # Перейдём на страницу ЯндексСамокат
-        cls.driver.get(UrlsScooter().MAIN_PAGE)
+        cls.driver.get(urls.MAIN_PAGE_SCOOTER_SERVICES)
         # Создадим объект класса страницы ЯндексСамокат
-        cls.base_page = BasePageScooter(cls.driver)
+        cls.base_page = BasePage(cls.driver)
 
     @pytest.mark.parametrize('question, answer, expected_answer', Data().locators_questions_answeres_list())
     def test_drop_down_list(self, question, answer, expected_answer):

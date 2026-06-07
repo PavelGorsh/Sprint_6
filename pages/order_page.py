@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions
 import locators.order_page_locators as OPL
 
 
-class OrderPageScooter:
+class OrderPage:
 
     def __init__(self, driver):
         self.driver = driver
@@ -62,7 +62,7 @@ class OrderPageScooter:
     def click_order_button(self):
         self.driver.find_element(*OPL.ORDER_BUTTON).click()
 
-    def click_order_window_button(self):
+    def click_order_confirm_button(self):
         self.driver.find_element(*OPL.ORDER_CONFIRM_BUTTON).click()
 
     def check_order(self):
