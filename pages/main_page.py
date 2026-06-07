@@ -1,6 +1,7 @@
 import locators.main_page_locators as MPL
 import urls
 from pages.base_page import BasePage
+import allure
 
 
 class MainPage(BasePage):
@@ -18,6 +19,7 @@ class MainPage(BasePage):
         self.switch_window(self.driver, new_window_handle)
         self.wait_for_load_window_title(self.driver, "Яндекс — быстрый поиск в интернете")
     
+    @allure.step('Нажимаем на один из вопросов в разделе «Вопросы о важном»')
     def click_question_on_base_page(self, question):
         self.click_button(self.driver, question)
 
@@ -25,17 +27,22 @@ class MainPage(BasePage):
         self.scroll_page(self.driver, button)
         self.click_button(self.driver, button)
 
+    @allure.step('Нажимаем на логотип «Самоката»')
     def click_scooter_logo_button(self):
         self.click_button(self.driver, MPL.LOGO_SCOOTER)
 
+    @allure.step('Нажимаем на логотип «Яндекса»')
     def click_yandex_logo_button(self):
         self.click_button(self.driver, MPL.LOGO_YANDEX)
 
+    @allure.step('Проверяем ответ на вопрос')
     def check_drop_down_list_on_base_page(self, answer, expected_answer):
         assert expected_answer == self.get_text_attribute(self.driver, answer)
 
+    @allure.step('Проверяем что произошел переход на главную страницу «Самоката»')
     def check_scooter_logo_button_where_transition(self):
         assert urls.MAIN_PAGE_SCOOTER_SERVICES == self.get_current_url(self.driver)
-        
+    
+    @allure.step('Проверяем что произошел переход на главную страницу «Яндекса»')
     def check_yandex_logo_button_where_transition(self):
         assert urls.MAIN_PAGE_YANDEX_SHORT in self.get_current_url(self.driver)

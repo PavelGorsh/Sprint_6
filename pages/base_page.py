@@ -1,5 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+import allure
 
 
 class BasePage:
@@ -17,6 +18,7 @@ class BasePage:
         WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((element)))
         driver.find_element(*element).click()
 
+    @allure.step('Переходим к соответствующему элементу на странице')
     def scroll_page(self, driver, element):
         driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(*element))
 
