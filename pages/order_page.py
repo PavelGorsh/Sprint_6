@@ -1,32 +1,32 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 import locators.order_page_locators as OPL
+from pages.base_page import BasePage
 
 
-class OrderPage:
+class OrderPage(BasePage):
 
     def __init__(self, driver):
         self.driver = driver
 
-    def wait_for_load(self, element):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((element)))
+    def click_order_button_on_main_page(self, button):
+        self.scroll_page(self.driver, button)
+        self.click_button(self.driver, button)
 
     def fill_name(self, name):
-        self.driver.find_element(*OPL.NAME).send_keys(name)
+        self.send_keys(self.driver, OPL.NAME, name)
     
     def fill_surname(self, surname):
-        self.driver.find_element(*OPL.SURNAME).send_keys(surname)
+        self.send_keys(self.driver, OPL.SURNAME, surname)
 
     def fill_address(self, address):
-        self.driver.find_element(*OPL.ADDRESS).send_keys(address)
+        self.send_keys(self.driver, OPL.ADDRESS, address)
 
     def fill_metro(self, metro):
-        self.driver.find_element(*OPL.METRO).click()
-        self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*metro))
-        self.driver.find_element(*metro).click()
+        self.click_button(self.driver, OPL.METRO)
+        self.scroll_page(self.driver, metro)
+        self.click_button(self.driver, metro)
 
     def fill_phone(self, phone):
-        self.driver.find_element(*OPL.PHONE).send_keys(phone)
+        self.send_keys(self.driver, OPL.PHONE, phone)
 
     def fill_order_for(self, name, surname, address, metro, phone):
         self.fill_name(name)
@@ -36,22 +36,22 @@ class OrderPage:
         self.fill_phone(phone)
 
     def click_order_next(self):
-        self.driver.find_element(*OPL.NEXT).click()
+        self.click_button(self.driver, OPL.NEXT)
 
     def fill_date(self, date):
-        self.driver.find_element(*OPL.DATE).click()
-        self.wait_for_load(OPL.DATEPICKER)
-        self.driver.find_element(*date).click()
+        self.click_button(self.driver, OPL.DATE)
+        self.wait_for_load(self.driver, OPL.DATEPICKER)
+        self.click_button(self.driver, date)
 
     def fill_period(self, period):
-        self.driver.find_element(*OPL.PERIOD).click()
-        self.driver.find_element(*period).click()
+        self.click_button(self.driver, OPL.PERIOD)
+        self.click_button(self.driver, period)
 
     def fill_color(self, color):
-        self.driver.find_element(*color).click()
+        self.click_button(self.driver, color)
 
     def fill_comment(self, comment):
-        self.driver.find_element(*OPL.COMMENT).send_keys(comment)
+        self.send_keys(self.driver, OPL.COMMENT, comment)
 
     def fill_order_about(self, date, period, color, comment):
         self.fill_date(date)        
@@ -59,19 +59,18 @@ class OrderPage:
         self.fill_color(color)
         self.fill_comment(comment)
 
-    def click_order_button(self):
-        self.driver.find_element(*OPL.ORDER_BUTTON).click()
+    def click_order_button_on_order_page(self):
+        self.click_button(self.driver, OPL.ORDER_BUTTON)
 
     def click_order_confirm_button(self):
-        self.driver.find_element(*OPL.ORDER_CONFIRM_BUTTON).click()
+        self.click_button(self.driver, OPL.ORDER_CONFIRM_BUTTON)
 
     def check_order(self):
-        assert "Заказ оформлен" in self.driver.find_element(*OPL.ORDER_SUCCESS).text
+        assert "Заказ оформлен" in self.get_text_attribute(self.driver, OPL.ORDER_SUCCESS)
 
     def return_base_page(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((OPL.BUTTON_SHOW_STATUS)))
-        WebDriverWait(self.driver, 5).until(expected_conditions.element_to_be_clickable((OPL.BUTTON_SHOW_STATUS)))
-        self.driver.find_element(*OPL.BUTTON_SHOW_STATUS).click()
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((OPL.STATUS)))
-        self.driver.find_element(*OPL.BASE_PAGE_BUTTON).click()
+        self.wait_for_load(self.driver, OPL.BUTTON_SHOW_STATUS)
+        self.click_button(self.driver, OPL.BUTTON_SHOW_STATUS)
+        self.wait_for_load(self.driver, OPL.STATUS)
+        self.click_button(self.driver, OPL.BASE_PAGE_BUTTON)
         

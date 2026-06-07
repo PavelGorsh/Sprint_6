@@ -1,4 +1,4 @@
-import locators.base_page_locators as BPL
+import locators.main_page_locators as BPL
 import locators.order_page_locators as OPL
 
 
@@ -18,7 +18,7 @@ class DataListsForTests:
         return question_answer_list
     
     def data_for_order(self):
-        order_button_list = [BPL.ORDER_BTN_HEADER, BPL.ORDER_BTN_BODY]
+        order_button_list = [BPL.ORDER_BTN_BASE_PAGE_HEADER, BPL.ORDER_BTN_BASE_PAGE_BODY]
         data_for_order_for = [
             ["Павел", "Горшков", "Москва Антикафе Терра", OPL.METRO_NAME_BAUMANSKAYA, "+79998887766"],
             ["Курьер", "Курьерыч", "Москва Электрозавод", OPL.METRO_NAME_ELECTROZAVODSKAYA, "+79876543210"]

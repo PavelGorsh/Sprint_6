@@ -1,52 +1,39 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-import locators.base_page_locators as BPL
-import urls
 
 
 class BasePage:
 
-    def __init__(self, driver):
-        self.driver = driver
+    def wait_for_load(self, driver, element):
+        WebDriverWait(driver, 5).until(expected_conditions.visibility_of_element_located((element)))
 
-    def wait_for_load_base_page(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((BPL.ORDER_BTN_HEADER)))
+    def wait_for_load_2_windows(self, driver):
+        WebDriverWait(driver, 5).until(expected_conditions.number_of_windows_to_be(2))
 
-    def wait_for_open_drop_down_list(self, answer):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((answer)))
+    def wait_for_load_window_title(self, driver, comment):
+        WebDriverWait(driver, 5).until(expected_conditions.title_is(comment))
 
-    def scroll_base_page(self, element):
-        self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*element))
+    def click_button(self, driver, element):
+        WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((element)))
+        driver.find_element(*element).click()
 
-    def scroll_base_page_header(self):
-        self.driver.execute_script("window.scrollBy(0, -2000);")
+    def scroll_page(self, driver, element):
+        driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(*element))
+
+    def send_keys(self, driver, element, comment):
+        driver.find_element(*element).send_keys(comment)
+
+    def get_text_attribute(self, driver, element):
+        return driver.find_element(*element).text
     
-    def click_question(self, question):
-        self.driver.find_element(*question).click()
+    def get_current_url(self, driver):
+        return driver.current_url
 
-    def check_drop_down_list(self, answer, expected_answer):
-        assert expected_answer == self.driver.find_element(*answer).text
+    def get_window_current_handle(self, driver):
+        return driver.current_window_handle
 
-    def click_order_button(self, button):
-        self.scroll_base_page(button)
-        self.driver.find_element(*button).click()
-
-    def click_scooter_logo_button(self):
-        self.driver.find_element(*BPL.LOGO_SCOOTER).click()
-
-    def click_yandex_logo_button(self):
-        self.driver.find_element(*BPL.LOGO_YANDEX).click()
-
-    def check_scooter_logo_button_where_transition(self):
-        assert urls.MAIN_PAGE_SCOOTER_SERVICES == self.driver.current_url
-
-    def wait_for_load_yandex_page(self):
-        wait = WebDriverWait(self.driver, 5)
-        original_window_handle = self.driver.current_window_handle
-        wait.until(expected_conditions.number_of_windows_to_be(2))
-        new_window_handle = (set(self.driver.window_handles) - {original_window_handle}).pop()
-        self.driver.switch_to.window(new_window_handle)
-        wait.until(expected_conditions.title_is("Яндекс — быстрый поиск в интернете"))
-        
-    def check_yandex_logo_button_where_transition(self):
-        assert urls.MAIN_PAGE_YANDEX_SHORT in self.driver.current_url
+    def get_window_handles(self, driver):
+        return driver.window_handles
+    
+    def switch_window(self, driver, handle):
+        driver.switch_to.window(handle)
