@@ -4,7 +4,6 @@ import locators.order_page_locators as OPL
 
 
 class OrderPageScooter:
-    driver = None
 
     def __init__(self, driver):
         self.driver = driver
@@ -70,6 +69,8 @@ class OrderPageScooter:
         assert "Заказ оформлен" in self.driver.find_element(*OPL.ORDER_SUCCESS).text
 
     def return_base_page(self):
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((OPL.BUTTON_SHOW_STATUS)))
+        WebDriverWait(self.driver, 5).until(expected_conditions.element_to_be_clickable((OPL.BUTTON_SHOW_STATUS)))
         self.driver.find_element(*OPL.BUTTON_SHOW_STATUS).click()
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((OPL.STATUS)))
         self.driver.find_element(*OPL.BASE_PAGE_BUTTON).click()

@@ -1,11 +1,9 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 import locators.base_page_locators as BPL
-import time
 
 
 class BasePageScooter:
-    driver = None
 
     def __init__(self, driver):
         self.driver = driver

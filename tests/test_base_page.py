@@ -7,7 +7,6 @@ import pytest
 
 
 class TestBasePage:
-    driver = None
 
     @classmethod
     def setup_class(cls):

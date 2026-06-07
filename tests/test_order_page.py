@@ -8,7 +8,6 @@ import pytest
 
 
 class TestOrderPage:
-    driver = None
     data = Data().data_for_order()
 
     @classmethod
