@@ -2,13 +2,12 @@ from selenium import webdriver
 from pages.base_page import BasePageScooter
 from urls import UrlsScooter
 from data_for_tests.data_lists_for_tests import DataListsForTests as Data
-from locators.base_page_locators import LocatorsBasePageScooter as LocatorsBP
+import locators.base_page_locators as BPL
 import pytest
 
 
 class TestBasePage:
     driver = None
-    locators_bp = LocatorsBP()
 
     @classmethod
     def setup_class(cls):
@@ -24,7 +23,7 @@ class TestBasePage:
         # Добавь явное ожидание для загрузки страницы
         self.base_page.wait_for_load_base_page()
         # Найди раздел "Вопросы о важном" и прокрути страницу к нему
-        self.base_page.scroll_base_page(self.locators_bp.QUESTIONS_BLOCK)
+        self.base_page.scroll_base_page(BPL.QUESTIONS_BLOCK)
         # Нажми на один из вопросов попорядку
         self.base_page.click_question(question)
         # Добавь явное ожидание для открытия выпадающего списка

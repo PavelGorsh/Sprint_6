@@ -1,19 +1,17 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
-from locators.base_page_locators import LocatorsBasePageScooter as locatorsBP
+import locators.base_page_locators as BPL
 import time
 
 
 class BasePageScooter:
     driver = None
-    locators = None
 
     def __init__(self, driver):
         self.driver = driver
-        self.locators = locatorsBP()
 
     def wait_for_load_base_page(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((self.locators.ORDER_BTN_HEADER)))
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((BPL.ORDER_BTN_HEADER)))
 
     def wait_for_open_drop_down_list(self, answer):
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located((answer)))
@@ -35,10 +33,10 @@ class BasePageScooter:
         self.driver.find_element(*button).click()
 
     def click_scooter_logo_button(self):
-        self.driver.find_element(*self.locators.LOGO_SCOOTER).click()
+        self.driver.find_element(*BPL.LOGO_SCOOTER).click()
 
     def click_yandex_logo_button(self):
-        self.driver.find_element(*self.locators.LOGO_YANDEX).click()
+        self.driver.find_element(*BPL.LOGO_YANDEX).click()
 
     def check_scooter_logo_button_where_transition(self):
         assert "https://qa-scooter.education-services.ru/" == self.driver.current_url

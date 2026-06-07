@@ -1,7 +1,7 @@
 from selenium import webdriver
 from pages.base_page import BasePageScooter
 from pages.order_page import OrderPageScooter
-from locators.order_page_locators import LocatorsOrderPageScooter as locatorsOP
+import locators.order_page_locators as OPL
 from urls import UrlsScooter
 from data_for_tests.data_lists_for_tests import DataListsForTests as Data
 import pytest
@@ -9,7 +9,6 @@ import pytest
 
 class TestOrderPage:
     driver = None
-    locators_op = locatorsOP()
     data = Data().data_for_order()
 
     @classmethod
@@ -29,7 +28,7 @@ class TestOrderPage:
         # Нажать кнопку «Заказать»
         self.base_page.click_order_button(button)
         # Добавь явное ожидание для загрузки страницы заказа
-        self.order_page.wait_for_load(self.locators_op.NAME)
+        self.order_page.wait_for_load(OPL.NAME)
         # Заполнить поля заказа «Для кого самокат»
         self.order_page.fill_order_for(name, surname, address, metro, phone)
         # Нажать кнопку «Далее»
@@ -39,11 +38,11 @@ class TestOrderPage:
         # Нажать кнопку «Заказать»
         self.order_page.click_order_button()
         # Добавить явное ожидание для загрузки страницы подтверждения заказа
-        self.order_page.wait_for_load(self.locators_op.ORDER_CONFIRM)
+        self.order_page.wait_for_load(OPL.ORDER_CONFIRM)
         # Нажать кнопку «Да»
         self.order_page.click_order_window_button()
         # Добавить явное ожидание для загрузки страницы сообщения об успешном создании заказа
-        self.order_page.wait_for_load(self.locators_op.ORDER_SUCCESS)
+        self.order_page.wait_for_load(OPL.ORDER_SUCCESS)
         # Проверка создания заказа
         self.order_page.check_order()
         # Возврат на главную страницу
