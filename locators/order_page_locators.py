@@ -23,7 +23,12 @@ ORDER_BUTTON = [By.XPATH, "//div[@class='Order_Buttons__1xGrp']/button[text()='�
 ORDER_CONFIRM = [By.XPATH, "//div[text()='Хотите оформить заказ?']"]
 ORDER_CONFIRM_BUTTON = [By.XPATH, "//button[text()='Да']"]
 ORDER_SUCCESS = [By.XPATH, "//div[text()='Заказ оформлен']"]
-BASE_PAGE_BUTTON = [By.CSS_SELECTOR, "a.Header_LogoScooter__3lsAR"]
+ORDER_COMMENT_WITH_NUMBER = [By.CSS_SELECTOR, "div.Order_Text__2broi"]
 BUTTON_SHOW_STATUS = [By.XPATH, "//button[text()='Посмотреть статус']"]
-STATUS = [By.XPATH, "//div[text()='Имя']"]
+ORDER_STATUS_NAME = [By.XPATH, "//div[text()='Имя']/parent::div/div[@class='Track_Value__15eEX']"]
+ORDER_STATUS_SURNAME = [By.XPATH, "//div[text()='Фамилия']/parent::div/div[@class='Track_Value__15eEX']"]
+ORDER_STATUS_ADDRESS = [By.XPATH, "//div[text()='Адрес']/parent::div/div[@class='Track_Value__15eEX']"]
+ORDER_STATUS_METRO = [By.XPATH, "//div[text()='Станция метро']/parent::div/div[@class='Track_Value__15eEX']"]
+ORDER_STATUS_PHONE = [By.XPATH, "//div[text()='Телефон']/parent::div/div[@class='Track_Value__15eEX']"]
+
     

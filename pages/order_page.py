@@ -1,4 +1,5 @@
 import locators.order_page_locators as OPL
+import locators.main_page_locators as MPL
 from pages.base_page import BasePage
 import allure
 
@@ -7,6 +8,21 @@ class OrderPage(BasePage):
 
     def __init__(self, driver):
         self.driver = driver
+
+    def wait_for_load_main_page(self):
+        self.wait_for_load(self.driver, MPL.ORDER_BTN_BASE_PAGE_HEADER)
+
+    def wait_for_load_order_page_for_which_person(self):
+        self.wait_for_load(self.driver, OPL.NAME)
+
+    def wait_for_load_order_page_about_rent(self):
+        self.wait_for_load(self.driver, OPL.DATE)
+
+    def wait_for_load_order_page_confirm(self):
+        self.wait_for_load(self.driver, OPL.ORDER_CONFIRM)
+
+    def wait_for_load_order_page_success(self):
+        self.wait_for_load(self.driver, OPL.ORDER_SUCCESS)
 
     @allure.step('Нажимаем на одну из кнопок «Заказать» на главной странице')
     def click_order_button_on_main_page(self, button):
@@ -73,13 +89,12 @@ class OrderPage(BasePage):
         self.click_button(self.driver, OPL.ORDER_CONFIRM_BUTTON)
 
     @allure.step('Проверяем успешность создания заказа самоката')
-    def check_order(self):
-        assert "Заказ оформлен" in self.get_text_attribute(self.driver, OPL.ORDER_SUCCESS)
-
-    @allure.step('Возвращаемся на главную страницу')
-    def return_base_page(self):
+    def check_order(self, name, surname, address, metro, phone):
+        success_title = self.get_text_attribute(self.driver, OPL.ORDER_SUCCESS)
         self.wait_for_load(self.driver, OPL.BUTTON_SHOW_STATUS)
         self.click_button(self.driver, OPL.BUTTON_SHOW_STATUS)
-        self.wait_for_load(self.driver, OPL.STATUS)
-        self.click_button(self.driver, OPL.BASE_PAGE_BUTTON)
+        self.wait_for_load(self.driver, OPL.ORDER_STATUS_NAME)
+        assert {"Заказ оформлен" in success_title and name == OPL.ORDER_STATUS_NAME
+                and surname == OPL.ORDER_STATUS_SURNAME and address == OPL.ORDER_STATUS_ADDRESS
+                and metro == OPL.ORDER_STATUS_METRO and phone == OPL.ORDER_STATUS_PHONE}
         

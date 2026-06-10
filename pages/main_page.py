@@ -9,6 +9,9 @@ class MainPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
 
+    def wait_for_load_main_page(self):
+        self.wait_for_load(self.driver, MPL.ORDER_BTN_BASE_PAGE_HEADER)
+
     def wait_for_open_drop_down_list(self, answer):
         self.wait_for_load(self.driver, answer)
 
@@ -21,6 +24,7 @@ class MainPage(BasePage):
     
     @allure.step('Нажимаем на один из вопросов в разделе «Вопросы о важном»')
     def click_question_on_base_page(self, question):
+        self.scroll_page(self.driver, MPL.QUESTIONS_BLOCK)
         self.click_button(self.driver, question)
 
     def click_order_button_on_base_page(self, button):
