@@ -4,7 +4,7 @@ import pytest
 import allure
 
 
-class TestBasePage:
+class TestMainPage:
 
     @allure.title('Проверка выпадающего списока в разделе «Вопросы о важном»')
     @pytest.mark.parametrize('question, answer, expected_answer', Data().locators_questions_answeres_list())
@@ -14,11 +14,11 @@ class TestBasePage:
         # Добавь явное ожидание для загрузки главной страницы
         main_page.wait_for_load_main_page()
         # Найди раздел «Вопросы о важном», прокрути страницу к нему и нажми на один из вопросов попорядку
-        main_page.click_question_on_base_page(question)
+        main_page.click_question_on_main_page(question)
         # Добавь явное ожидание для открытия выпадающего списка
         main_page.wait_for_open_drop_down_list(answer)
         # Проверка текста выпадающего списка
-        main_page.check_drop_down_list_on_base_page(answer, expected_answer)
+        main_page.check_drop_down_list_on_main_page(answer, expected_answer)
 
     @allure.title('Проверка нажатия на логотип «Самоката»')
     def test_scooter_logo_button_transition(self, driver_firefox_scooter):

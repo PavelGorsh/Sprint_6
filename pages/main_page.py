@@ -23,13 +23,9 @@ class MainPage(BasePage):
         self.wait_for_load_window_title(self.driver, "Яндекс — быстрый поиск в интернете")
     
     @allure.step('Нажимаем на один из вопросов в разделе «Вопросы о важном»')
-    def click_question_on_base_page(self, question):
+    def click_question_on_main_page(self, question):
         self.scroll_page(self.driver, MPL.QUESTIONS_BLOCK)
         self.click_button(self.driver, question)
-
-    def click_order_button_on_base_page(self, button):
-        self.scroll_page(self.driver, button)
-        self.click_button(self.driver, button)
 
     @allure.step('Нажимаем на логотип «Самоката»')
     def click_scooter_logo_button(self):
@@ -40,7 +36,7 @@ class MainPage(BasePage):
         self.click_button(self.driver, MPL.LOGO_YANDEX)
 
     @allure.step('Проверяем ответ на вопрос')
-    def check_drop_down_list_on_base_page(self, answer, expected_answer):
+    def check_drop_down_list_on_main_page(self, answer, expected_answer):
         assert expected_answer == self.get_text_attribute(self.driver, answer)
 
     @allure.step('Проверяем что произошел переход на главную страницу «Самоката»')
